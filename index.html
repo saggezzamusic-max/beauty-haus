@@ -405,6 +405,31 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
   </div>
 </div>
 
+<!-- ===== MODAL DE PAGO (Transferencia Tenpo) ===== -->
+<div id="pay-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(28,20,16,.75);align-items:center;justify-content:center;padding:20px">
+  <div style="background:var(--cream);max-width:420px;width:100%;padding:36px 30px;border-radius:2px;position:relative">
+    <button onclick="document.getElementById('pay-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--black)">✕</button>
+    <h3 style="font-family:var(--font);font-size:1.5rem;margin-bottom:6px;color:var(--black)">Datos para transferir</h3>
+    <p style="font-family:var(--body);font-size:.82rem;color:rgba(28,20,16,.6);margin-bottom:22px">Transfiere el total de tu pedido y luego confírmalo por WhatsApp.</p>
+
+    <div style="background:var(--white);border:1px solid rgba(184,137,42,.25);border-radius:2px;padding:18px 20px;margin-bottom:16px;font-family:var(--mono);font-size:.78rem;line-height:2;color:var(--black)">
+      <div><strong>Nombre:</strong> Braulio Enrique Arancibia Pérez</div>
+      <div><strong>RUT:</strong> 19.741.000-0</div>
+      <div><strong>Banco:</strong> Tenpo Prepago</div>
+      <div><strong>Tipo cuenta:</strong> Cuenta Vista</div>
+      <div><strong>N° cuenta:</strong> 111119741000</div>
+      <div><strong>Correo:</strong> braulioap123@gmail.com</div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;font-family:var(--font);font-size:1.15rem;color:var(--black)">
+      <span>Total a transferir</span><span id="pay-total" style="color:var(--gold);font-weight:600">$0</span>
+    </div>
+
+    <button onclick="copyAccountData()" style="width:100%;padding:13px;background:none;border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;border-radius:2px">📋 Copiar datos de la cuenta</button>
+    <button class="cchk" onclick="confirmarTransferencia()">Ya transferí, avisar por WhatsApp →</button>
+  </div>
+</div>
+
 <nav id="nav">
   <div class="nav-logo">Beauty Häus</div>
   <ul class="nav-links">
@@ -492,10 +517,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-sale">Antes $7.990</span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Gel Limpiador</div>
-      <div class="prod-desc">Fresa · Piña · Coco · Exfoliante corporal premium</div>
+      <div class="prod-name">Gel Limpiador Coconut</div>
+      <div class="prod-desc">Glow Coconut · Coco · Exfoliante premium</div>
       <div class="prod-price">$5.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Gel Limpiador',5990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Gel Limpiador Coconut',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
@@ -506,22 +531,22 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
       </div>
       <div class="prod-num">Body Care</div>
       <div class="prod-name">Acondicionador Banana</div>
-      <div class="prod-desc">Aromática · Coco · Piña · Fresa · 350ml</div>
-      <div class="prod-price">$6.990</div>
-      <button class="atc" onclick="addToCart('Acondicionador Banana',6990)">+ Agregar al ritual</button>
+      <div class="prod-desc">Aromática · jengibre · Proteínas · 350ml</div>
+      <div class="prod-price">$5.990</div>
+      <button class="atc" onclick="addToCart('Acondicionador Banana',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
       <div class="prod-img-wrap"><img class="prod-img" loading="lazy" src="assets/prod_03.jpg" alt="Crema de Ojos"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <span class="prod-badge-hot">🌊 Verano</span>
-        <span class="prod-badge-offer">Los 3 · $18.990</span>
+        <span class="prod-badge-offer">Los 3 · $13.990</span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Crema de Ojos</div>
+      <div class="prod-name">Crema de Ojos Suave</div>
       <div class="prod-desc">Extract Centella Asiatica · Sunset Beach · 15ml</div>
       <div class="prod-price">$4.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Crema de Ojos',4990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Crema de Ojos Suave',4990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
@@ -531,10 +556,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">Los 2 · $12.990</span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Crema Hidratante</div>
+      <div class="prod-name">Crema Hidratante Profunda</div>
       <div class="prod-desc">Extract Centella Asiatica + Body Mist </div>
       <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Crema Hidratante',12990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Crema Hidratante Profunda',6990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
@@ -557,10 +582,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span style="font-size:.5rem;font-family:var(--mono);color:rgba(212,112,138,.7)"></span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Mascarilla Capilar</div>
+      <div class="prod-name">Mascarilla Capilar Bubblegum</div>
       <div class="prod-desc">Exfolia · Ilumina · Nutrición profunda</div>
-      <div class="prod-price">$7.990</div>
-      <button class="atc" onclick="addToCart('Mascarilla Capilar',7990)">+ Agregar al ritual</button>
+      <div class="prod-price">$6.990</div>
+      <button class="atc" onclick="addToCart('Mascarilla Capilar Bubblegum',6990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
@@ -623,10 +648,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">Los 3 · $14.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Body Lotion </div>
+      <div class="prod-name">Body Lotion Soft </div>
       <div class="prod-desc">Extract Centella Asiatica + Hair Mask · Cruelty Free</div>
-      <div class="prod-price">$14.990 <span class="prod-unit">kit</span></div>
-      <button class="atc" onclick="addToCart('Body Lotion',14990)">+ Agregar al ritual</button>
+      <div class="prod-price">$5.990 <span class="prod-unit">kit</span></div>
+      <button class="atc" onclick="addToCart('Body Lotion Soft',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="hair">
@@ -636,10 +661,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-sale">Antes $7.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Hair Mask HA</div>
-      <div class="prod-desc">Ácido Hialurónico · Suaviza · Nutre · Cruelty Free · 700ml</div>
+      <div class="prod-name">Mascarilla Cabello Keratina</div>
+      <div class="prod-desc">Sin Sal · Suaviza · Nutre · Cruelty Free · 700ml</div>
       <div class="prod-price">$5.990</div>
-      <button class="atc" onclick="addToCart('Hair Mask Ácido Hialurónico',5990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Mascarilla Cabello Keratina',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="hair">
@@ -649,10 +674,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">2x $11.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Exfoliante Body Scrub</div>
+      <div class="prod-name">Exfoliante Body Scrub Strawberry</div>
       <div class="prod-desc">Strawberry · Repara · Hidrata · 350ml</div>
       <div class="prod-price">$5.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Exfoliante Body Scrub',5990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Exfoliante Body Scrub Strawberry',5990)">+ Agregar al ritual</button>
     </div>
 
     <!-- KITS -->
@@ -702,10 +727,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span style="font-size:.5rem;font-family:var(--mono);color:rgba(201,169,110,.65)">Desde el 1er uso</span>
       </div>
       <div class="prod-num">Kit</div>
-      <div class="prod-name">Exfoliante Body Scrub</div>
+      <div class="prod-name">Exfoliante Body Scrub Pineapple</div>
       <div class="prod-desc">Controla el exceso de grasa · Pineapple</div>
       <div class="prod-price">$5.990 <span class="prod-unit">kit</span></div>
-      <button class="atc" onclick="addToCart('Exfoliante Body Scrub',5990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Exfoliante Body Scrub Pineapple',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="hair kit">
@@ -715,10 +740,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">2x $8.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Exfoliante Body Scrub</div>
+      <div class="prod-name">Exfoliante Body Scrub Coconut</div>
       <div class="prod-desc">Crema · Coconut · 250ml</div>
       <div class="prod-price">$5.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Exfoliante Body Scrub',5990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Exfoliante Body Scrub Coconut',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="hair kit">
@@ -728,10 +753,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">2x $9.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Shampoo + Acond. Keratina</div>
+      <div class="prod-name">Mascarilla Cabello Cebolla</div>
       <div class="prod-desc">Reparador · Para todo tipo de cabello · 400ml</div>
       <div class="prod-price">$5.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Shampoo Keratina',9990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Mascarilla Cabello Cebolla',5990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="hair kit">
@@ -741,10 +766,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">Pack x2 $11.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Fruit Candy Duo</div>
+      <div class="prod-name">Mascarilla Cabello Aceite De Argán</div>
       <div class="prod-desc">Pelo largo y fuerte · Sin quiebre ni frizz · 350ml</div>
-      <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Fruit Candy Duo',11990)">+ Agregar al ritual</button>
+      <div class="prod-price">$5.990 <span class="prod-unit">c/u</span></div>
+      <button class="atc" onclick="addToCart('Mascarilla Cabello Aceite De Argán',5990)">+ Agregar al ritual</button>
     </div>
 
     <!-- ===== PRODUCTOS NUEVOS (molde) — edita nombre, precio, descripción, imagen y categoría ===== -->
@@ -768,8 +793,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-sale">Antes $8.990</span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Jabon Aromatico Espuma</div>
-      <div class="prod-desc">Coconut</div>
+      <div class="prod-name">Jabon Aromatico Espuma Coconut</div>
+      <div class="prod-desc">Aromatico</div>
       <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
       <button class="atc" onclick="addToCart('Jabon Aromatico Espuma',6990)">+ Agregar al ritual</button>
     </div>
@@ -780,8 +805,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-hot">✨ Más vendido</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Jabon Aromatico Espuma</div>
-      <div class="prod-desc">Strawberry</div>
+      <div class="prod-name">Jabon Aromatico Espuma Strawberry</div>
+      <div class="prod-desc">Fresa Aromatica</div>
       <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
       <button class="atc" onclick="addToCart('Jabon Aromatico Espuma',6990)">+ Agregar al ritual</button>
     </div>
@@ -793,10 +818,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-offer">2x $14.990</span>
       </div>
       <div class="prod-num">Cabello</div>
-      <div class="prod-name">Sun Glow </div>
+      <div class="prod-name">Sun Glow Caramel</div>
       <div class="prod-desc">Brillo Bronceado Iluminador</div>
       <div class="prod-price">$8.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Sun Glow ',8990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Sun Glow Caramel',8990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="kit">
@@ -805,10 +830,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-hot">💫 Kit completo</span>
       </div>
       <div class="prod-num">Kits</div>
-      <div class="prod-name">Bloqueador Aloe Vera</div>
-      <div class="prod-desc">Protector solar +50 SPF</div>
+      <div class="prod-name">Protector Solar Aloe Vera</div>
+      <div class="prod-desc">Protección +50 SPF</div>
       <div class="prod-price">$3.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Bloqueador Aloe Vera',3990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Protector Solar Aloe Vera',3990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="body">
@@ -817,17 +842,17 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-hot">✨ Nuevo</span>
       </div>
       <div class="prod-num">Body Care</div>
-      <div class="prod-name">Bloqueador Acido Hialurónico</div>
-      <div class="prod-desc">Protector solar +50 SPF</div>
+      <div class="prod-name">Protector Solar Acido Hialurónico</div>
+      <div class="prod-desc">Protección +50 SPF</div>
       <div class="prod-price">$3.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Bloqueador Acido Hialurónico',3990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Protector Solar Acido Hialurónico',3990)">+ Agregar al ritual</button>
     </div>
 
     <div class="prod-card" data-cat="kit">
       <div class="prod-img-wrap"><img class="prod-img" loading="lazy" src="assets/prod_27.jpg" alt="Nombre del Producto 27"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <span class="prod-badge-hot">💫 Kit completo</span>
-        <span class="prod-badge-offer">2x $24.990</span>
+        <span class="prod-badge-offer">2x $11.990</span>
       </div>
       <div class="prod-num">Kits</div>
       <div class="prod-name">Gel Limpiador Strawberry</div>
@@ -879,10 +904,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
         <span class="prod-badge-hot">💫 Kit completo</span>
       </div>
       <div class="prod-num">Kits</div>
-      <div class="prod-name">Jabon Aromatico Espuma</div>
-      <div class="prod-desc">Pineapple </div>
+      <div class="prod-name">Jabon Aromatico Espuma Pineapple</div>
+      <div class="prod-desc">Piña Aromatica </div>
       <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
-      <button class="atc" onclick="addToCart('Jabon Aromatico Espuma',6990)">+ Agregar al ritual</button>
+      <button class="atc" onclick="addToCart('Jabon Aromatico Espuma Pineapple',6990)">+ Agregar al ritual</button>
     </div>
 
   </div>
@@ -1046,7 +1071,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
     <div class="final-content reveal" style="text-align:center">
       <h2 class="final-title">Tu piel <em>florece.</em></h2>
       <p class="final-sub" style="margin-bottom:16px">Lo merecías desde siempre.</p>
-      <p class="final-sub" style="font-size:.85rem;margin-bottom:44px">+200 personas ya empezaron · Envío gratis · Garantía 30 días</p>
+      <p class="final-sub" style="font-size:.85rem;margin-bottom:44px">+200 personas ya empezaron · Envío via Starken · 100% Garantizado</p>
       <a href="#products" class="final-cta">Comenzar el ritual →</a>
     </div>
   </div>
@@ -1464,8 +1489,43 @@ function updateCart(){
 }
 function checkout(){
   if(!cartItems.length)return;
-  const msg=cartItems.map(i=>`${i.name} x${i.qty} ($${i.price.toLocaleString('es-CL')})`).join(', ');
-  window.open('https://wa.me/56973377731?text='+encodeURIComponent('Hola Beauhäus! Quiero pedir: '+msg),'_blank');
+  const total=cartItems.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('pay-total').textContent='$'+total.toLocaleString('es-CL');
+  document.getElementById('cart').classList.remove('open');
+  document.getElementById('pay-modal').style.display='flex';
+}
+
+function copyAccountData(){
+  const datos=`Nombre: Braulio Enrique Arancibia Pérez\nRUT: 19.741.000-0\nBanco: Tenpo Prepago\nTipo cuenta: Cuenta Vista\nN° cuenta: 111119741000\nCorreo: braulioap123@gmail.com`;
+  navigator.clipboard.writeText(datos).then(()=>{
+    const btn=event.target;
+    const original=btn.textContent;
+    btn.textContent='✓ Copiado';
+    setTimeout(()=>{btn.textContent=original;},2000);
+  });
+}
+
+function confirmarTransferencia(){
+  if(!cartItems.length)return;
+  const total=cartItems.reduce((s,i)=>s+i.price*i.qty,0);
+  const msg=cartItems.map(i=>`${i.name} x${i.qty} ($${(i.price*i.qty).toLocaleString('es-CL')})`).join(', ');
+
+  // Registra el pedido en Make.com → Google Sheets
+  fetch('https://hook.us2.make.com/k6igp8cr75of5iy67kau7psy8icit2cw',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      items:cartItems.map(i=>({nombre:i.name,cantidad:i.qty,precio:i.price})),
+      total:total,
+      canal:'transferencia',
+      fecha:new Date().toISOString()
+    })
+  }).catch(()=>{});
+
+  document.getElementById('pay-modal').style.display='none';
+  window.open('https://wa.me/56973377731?text='+encodeURIComponent(
+    'Hola Beautyhäus! Ya transferí mi pedido:\n'+msg+'\nTotal: $'+total.toLocaleString('es-CL')+'\nAdjunto mi comprobante 📎'
+  ),'_blank');
 }
 
 // ── REVEAL ────────────────────────────────────────────────────────────────────
