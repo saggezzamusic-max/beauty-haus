@@ -505,6 +505,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
     <button class="cat-btn" onclick="filterCat('body',this)">Cuerpo</button>
     <button class="cat-btn" onclick="filterCat('hair',this)">Cabello</button>
     <button class="cat-btn" onclick="filterCat('kit',this)">Kits</button>
+    <button class="cat-btn" onclick="filterCat('skin',this)">Piel</button>
+    <button class="cat-btn" onclick="filterCat('access',this)">Accesorios</button>
   </div>
 
   <div class="music-grid reveal" id="prod-grid">
@@ -908,6 +910,32 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold)}
       <div class="prod-desc">Piña Aromatica </div>
       <div class="prod-price">$6.990 <span class="prod-unit">c/u</span></div>
       <button class="atc" onclick="addToCart('Jabon Aromatico Espuma Pineapple',6990)">+ Agregar al ritual</button>
+    </div>
+
+    <!-- ===== PIEL Y ACCESORIOS (moldes) — edita nombre, precio, descripción, imagen y categoría ===== -->
+
+    <div class="prod-card" data-cat="skin">
+      <div class="prod-img-wrap"><img class="prod-img" loading="lazy" src="assets/prod_32.jpg" alt="Nombre del Producto 32"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="prod-badge-hot">✨ Nuevo</span>
+      </div>
+      <div class="prod-num">Piel</div>
+      <div class="prod-name">Producto Piel 1</div>
+      <div class="prod-desc">Descripción corta del producto</div>
+      <div class="prod-price">$9.990 <span class="prod-unit">c/u</span></div>
+      <button class="atc" onclick="addToCart('Producto Piel 1',9990)">+ Agregar al ritual</button>
+    </div>
+
+    <div class="prod-card" data-cat="access">
+      <div class="prod-img-wrap"><img class="prod-img" loading="lazy" src="assets/prod_33.jpg" alt="Nombre del Producto 33"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="prod-badge-hot">✨ Nuevo</span>
+      </div>
+      <div class="prod-num">Accesorios</div>
+      <div class="prod-name">Producto Accesorio 1</div>
+      <div class="prod-desc">Descripción corta del producto</div>
+      <div class="prod-price">$7.990 <span class="prod-unit">c/u</span></div>
+      <button class="atc" onclick="addToCart('Producto Accesorio 1',7990)">+ Agregar al ritual</button>
     </div>
 
   </div>
